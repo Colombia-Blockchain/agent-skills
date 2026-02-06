@@ -1,11 +1,11 @@
-# DEN Labs Agent Skills
+# Colombia Blockchain Agent Skills
 
 A collection of skills for AI agents. Skills are packaged instructions and scripts that extend agent capabilities.
 
 ## Installation
 
 ```bash
-npx skills add den-labs/agent-skills
+npx skills add Colombia-Blockchain/agent-skills
 ```
 
 ## Available Skills
