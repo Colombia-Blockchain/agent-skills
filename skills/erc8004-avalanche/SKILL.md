@@ -7,6 +7,39 @@ description: Register and manage AI agent identities on Avalanche C-Chain using 
 
 Register your AI agent on Avalanche C-Chain with a verifiable on-chain identity, making it discoverable and enabling trust signals through reputation and validation.
 
+## Starter Kit — Create an Agent in 5 Minutes
+
+The fastest way to get started. Copy the template, install, and run:
+
+```bash
+# 1. Copy the starter template
+cp -r assets/starter/ my-agent/
+cd my-agent/
+
+# 2. Install dependencies
+npm install
+
+# 3. Run locally
+npm run dev
+
+# 4. Open in browser
+open http://localhost:3000
+```
+
+Your agent is running! You'll see a dashboard with your agent's info and MCP tools.
+
+**What's included:**
+- `src/server.ts` — Complete server with dashboard, health check, MCP server (2 sample tools)
+- `registration.json` — ERC-8004 metadata template (edit name, description, capabilities)
+- `dashboard.html` — Visual page for browsers and scanners
+- `Dockerfile` + `railway.toml` — Ready to deploy on Railway
+- `README.md` — Step-by-step guide from local to deployed and registered on-chain
+
+**Next steps:**
+1. Edit `registration.json` with your agent's name and description
+2. Add your own MCP tools in `src/server.ts`
+3. Deploy to Railway and register on Avalanche (see `assets/starter/README.md`)
+
 ## What is ERC-8004?
 
 ERC-8004 is an Ethereum standard for trustless agent identity and reputation, deployed on Avalanche:
