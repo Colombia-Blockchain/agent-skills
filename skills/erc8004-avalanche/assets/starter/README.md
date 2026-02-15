@@ -1,6 +1,6 @@
 # ERC-8004 Agent — Starter Template
 
-Create your own AI agent on Avalanche in 5 minutes.
+Create your own AI agent with on-chain identity in 5 minutes.
 
 ---
 
@@ -14,7 +14,7 @@ Before starting, make sure you have these installed on your computer:
 | **Git** | Tracks changes in your code and uploads to GitHub | [git-scm.com/downloads](https://git-scm.com/downloads) — download and run the installer |
 | **A code editor** | Where you write and edit code | [VS Code](https://code.visualstudio.com/) (free, recommended) |
 | **A GitHub account** | Where your code lives online | [github.com](https://github.com/) — sign up for free |
-| **A crypto wallet** | Needed to register your agent on Avalanche | [MetaMask](https://metamask.io/) — install the browser extension |
+| **A crypto wallet** | Needed to register your agent on-chain | [MetaMask](https://metamask.io/) — install the browser extension |
 
 To verify Node.js and Git are installed, open your **Terminal** (Mac) or **Command Prompt** (Windows) and type:
 
@@ -91,7 +91,7 @@ Railway is a hosting service that puts your agent online so anyone can access it
 
 ## Register On-Chain
 
-This step gives your agent an official identity on the Avalanche blockchain (like an ID card).
+This step gives your agent an official on-chain identity (like a digital ID card). The example below uses Avalanche Fuji testnet:
 
 ```bash
 # Install Foundry (command-line tool for blockchain interaction)
@@ -135,8 +135,8 @@ After registering, you'll get an `agentId`. Update `registration.json` with it a
 | Term | Simple explanation |
 |------|--------------------|
 | **Agent** | A program that runs online and can do tasks automatically (answer questions, provide data, etc.) |
-| **Avalanche** | A blockchain network (like Ethereum but faster and cheaper). Where your agent gets its identity |
-| **AVAX** | The cryptocurrency of Avalanche. You need a tiny amount to register your agent |
+| **Avalanche** | An EVM blockchain (like Ethereum but faster and cheaper). Currently the main chain for ERC-8004 |
+| **AVAX** | The native token of Avalanche. You need a tiny amount to pay for registration fees |
 | **Blockchain** | A public digital record that nobody can alter. Used here to give your agent a verified identity |
 | **cast** | A command-line tool (from Foundry) to interact with blockchains |
 | **curl** | A command to make web requests from the terminal. Like visiting a URL without a browser |
@@ -144,20 +144,20 @@ After registering, you'll get an `agentId`. Update `registration.json` with it a
 | **Deploy** | To put your code on a server so it's accessible to everyone on the internet |
 | **Docker / Dockerfile** | A way to package your app so it runs the same everywhere. Railway uses it automatically |
 | **Endpoint** | A URL that returns data. Example: `/api/health` returns if the agent is alive |
-| **ERC-8004** | The standard that defines how AI agents register and build reputation on blockchain |
+| **ERC-8004** | An Ethereum standard that defines how AI agents register and build reputation on any EVM chain |
 | **Faucet** | A website that gives you free test tokens (test AVAX) for experimenting |
 | **Foundry** | A set of tools for working with blockchains from the terminal |
-| **Fuji** | Avalanche's test network. Use it to practice before going to mainnet (real network) |
+| **Fuji** | Avalanche's test network. Use it to practice before going to mainnet (the real network) |
 | **Git** | A tool that tracks changes in your code and lets you upload it to GitHub |
 | **GitHub** | A website where developers store and share code |
 | **Hono** | The web framework (library) used to build your agent's server |
 | **JSON** | A text format for structured data. Example: `{"name": "My Agent", "active": true}` |
 | **JSON-RPC** | A way for programs to communicate using JSON messages (used by MCP) |
 | **Localhost** | Your own computer acting as a server. `localhost:3000` = your machine, port 3000 |
-| **Mainnet** | The real Avalanche network where transactions cost real AVAX |
+| **Mainnet** | The real/production network where transactions cost real tokens |
 | **MCP** | Model Context Protocol — a standard way for AI agents to expose tools that other agents can use |
 | **MetaMask** | A popular crypto wallet (browser extension) for managing your blockchain accounts |
-| **NFT** | A unique digital token. Your agent's identity on Avalanche is an NFT |
+| **NFT** | A unique digital token. Your agent's on-chain identity is an NFT (ERC-721) |
 | **Node.js** | A program that lets you run JavaScript/TypeScript on your computer (not just in browsers) |
 | **npm** | Node Package Manager — downloads and manages libraries for your project |
 | **On-chain** | Recorded on the blockchain. Your agent's registration is on-chain |
@@ -165,9 +165,9 @@ After registering, you'll get an `agentId`. Update `registration.json` with it a
 | **Railway** | A hosting platform that deploys your code to the internet automatically |
 | **registration.json** | The file that describes your agent (name, description, services, image) |
 | **Repository (repo)** | A folder of code tracked by Git, usually hosted on GitHub |
-| **RPC** | Remote Procedure Call — the URL you use to talk to the Avalanche network |
+| **RPC** | Remote Procedure Call — the URL you use to talk to the blockchain network |
 | **Server** | A program running 24/7 that responds to requests from the internet |
-| **Snowtrace** | Avalanche's block explorer — a website to see transactions and agents |
+| **Snowtrace** | Avalanche's block explorer — a website to see transactions, contracts, and agents |
 | **Terminal** | The app where you type commands. Mac: Terminal. Windows: Command Prompt / PowerShell |
 | **Token** | A digital asset on a blockchain (AVAX is a token, your agent's NFT is a token) |
 | **TypeScript** | A programming language (JavaScript with types). Your agent's code is in TypeScript |

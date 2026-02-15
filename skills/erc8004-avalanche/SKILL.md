@@ -1,11 +1,11 @@
 ---
 name: erc8004-avalanche
-description: Register and manage AI agent identities on Avalanche C-Chain using ERC-8004 (Trustless Agents). Use this skill when the user wants to register an AI agent on-chain, give or read reputation feedback, request validation, or interact with ERC-8004 identity/reputation/validation registries on Avalanche mainnet or Fuji testnet.
+description: Register and manage AI agent identities on any EVM chain using ERC-8004 (Trustless Agents). Use this skill when the user wants to register an AI agent on-chain, give or read reputation feedback, request validation, or interact with ERC-8004 identity/reputation/validation registries. Currently deployed on Avalanche (mainnet and Fuji testnet).
 ---
 
-# ERC-8004: Trustless Agents on Avalanche
+# ERC-8004: Trustless Agents
 
-Register your AI agent on Avalanche C-Chain with a verifiable on-chain identity, making it discoverable and enabling trust signals through reputation and validation.
+Register your AI agent on-chain with a verifiable identity, making it discoverable and enabling trust signals through reputation and validation. ERC-8004 works on any EVM-compatible chain — currently deployed on Avalanche.
 
 ## Starter Kit — Create an Agent in 5 Minutes
 
@@ -38,11 +38,11 @@ Your agent is running! You'll see a dashboard with your agent's info and MCP too
 **Next steps:**
 1. Edit `registration.json` with your agent's name and description
 2. Add your own MCP tools in `src/server.ts`
-3. Deploy to Railway and register on Avalanche (see `assets/starter/README.md`)
+3. Deploy to Railway and register on-chain (see `assets/starter/README.md`)
 
 ## What is ERC-8004?
 
-ERC-8004 is an Ethereum standard for trustless agent identity and reputation, deployed on Avalanche:
+ERC-8004 is an Ethereum standard for trustless agent identity and reputation on any EVM chain:
 
 - **Identity Registry** - ERC-721 based agent IDs (your agent gets an NFT)
 - **Reputation Registry** - Feedback and trust signals from other agents/users
@@ -50,7 +50,9 @@ ERC-8004 is an Ethereum standard for trustless agent identity and reputation, de
 
 Website: https://www.8004.org | Spec: https://eips.ethereum.org/EIPS/eip-8004
 
-## Contract Addresses
+## Contract Addresses (Avalanche)
+
+> ERC-8004 can be deployed on any EVM chain. Below are the current official deployments:
 
 | Chain | Identity Registry | Reputation Registry |
 |---|---|---|
@@ -106,8 +108,8 @@ Your agent's registration file (see `assets/templates/registration.json`):
 ```json
 {
   "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
-  "name": "My Avalanche Agent",
-  "description": "An AI agent operating on Avalanche",
+  "name": "My Agent",
+  "description": "An AI agent with on-chain identity via ERC-8004",
   "image": "https://example.com/avatar.png",
   "services": [
     { "name": "web", "endpoint": "https://myagent.xyz/" },
@@ -149,7 +151,7 @@ Your agent's registration file (see `assets/templates/registration.json`):
 
 | Variable | Description | Required |
 |---|---|---|
-| `AVALANCHE_RPC_URL` | Avalanche C-Chain RPC endpoint | Yes (defaults to public RPC) |
+| `RPC_URL` | EVM chain RPC endpoint (defaults to Avalanche public RPC) | Yes |
 | `PRIVATE_KEY` | Wallet private key for signing transactions | Yes |
 | `PINATA_JWT` | Pinata API JWT for IPFS uploads | No (only for IPFS registration) |
 | `AGENT_NAME` | Agent display name | No |
@@ -157,7 +159,7 @@ Your agent's registration file (see `assets/templates/registration.json`):
 | `AGENT_IMAGE` | Avatar URL | No |
 | `SNOWTRACE_API_KEY` | Snowtrace API key for verification | No |
 
-## Avalanche Network Details
+## Network Details (Avalanche)
 
 | Parameter | Mainnet | Fuji Testnet |
 |---|---|---|
@@ -169,7 +171,7 @@ Your agent's registration file (see `assets/templates/registration.json`):
 
 ## Workflow
 
-1. **Get AVAX** - You need AVAX for gas fees (~0.01-0.05 AVAX for registration)
+1. **Get native tokens** - You need gas fees for registration (~0.01-0.05 AVAX on Avalanche)
 2. **Create Registration File** - Generate a JSON following the registration format
 3. **Upload to IPFS** (optional) - Pin via Pinata or host at any URL
 4. **Register On-Chain** - Call `register(agentURI)` on the Identity Registry

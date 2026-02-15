@@ -1,7 +1,7 @@
 /**
  * ERC-8004 Agent — Starter Template
  *
- * This is a minimal but complete ERC-8004 agent ready to deploy on Avalanche.
+ * This is a minimal but complete ERC-8004 agent ready to deploy on any EVM chain.
  * It includes: dashboard, health check, registration metadata, A2A card, and MCP server.
  *
  * To run locally:   npm run dev

@@ -1,7 +1,7 @@
 {
   "name": "my-erc8004-agent",
   "version": "1.0.0",
-  "description": "ERC-8004 AI Agent on Avalanche — Starter Template",
+  "description": "ERC-8004 AI Agent — Starter Template",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",

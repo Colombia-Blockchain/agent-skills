@@ -1,6 +1,6 @@
 {
   "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
-  "name": "My Avalanche Agent",
+  "name": "My Agent",
   "description": "A clear, honest description of what your agent does. Include: capabilities, data sources, number of endpoints (free vs paid), protocols supported (A2A, MCP, x402), and who created it.",
   "image": "https://your-agent.up.railway.app/public/agent.png",
   "services": [
@@ -38,7 +38,7 @@
         "tool_interaction/api_schema_understanding"
       ],
       "domains": [
-        "technology/blockchain/avalanche"
+        "technology/blockchain/your-domain"
       ]
     }
   ],
