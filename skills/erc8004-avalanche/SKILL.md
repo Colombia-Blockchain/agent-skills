@@ -169,6 +169,30 @@ cast call 0x8004BAa17C55a88189AE136b182e5fdA19dE9b63 \
 
 See `references/api-reference.md` for complete TypeScript examples.
 
+## Best Practices
+
+See `references/best-practices.md` for a comprehensive guide on:
+- Structuring `registration.json` metadata for maximum scanner score
+- Image/NFT requirements and hosting
+- Service exposure (web, A2A, MCP) — only declare what works
+- Capability definition — honest, real, backed by code
+- Avoiding scanner warnings (WA080 and others)
+- On-chain vs off-chain metadata consistency
+- Agent type classification (agentic, hybrid, informational)
+- Scanner score optimization (Engagement, Service, Publisher, Compliance, Momentum)
+
+## Deployment & Infrastructure
+
+See `references/deployment-guide.md` for:
+- Complete architecture diagram
+- Step-by-step creation flow (7 phases from zero to live agent)
+- Railway deployment guide with configuration
+- Infrastructure requirements and costs
+- Backend code structure and patterns (caching, timeouts, parallel calls)
+- On-chain registration flow
+- Monitoring and maintenance
+- Security checklist
+
 ## Links
 
 - [ERC-8004 Spec](https://eips.ethereum.org/EIPS/eip-8004)
