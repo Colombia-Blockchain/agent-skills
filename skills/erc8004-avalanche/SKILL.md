@@ -255,6 +255,7 @@ See `references/troubleshooting.md` for:
 - [ERC-8004 Spec](https://eips.ethereum.org/EIPS/eip-8004)
 - [8004.org](https://www.8004.org)
 - [8004scan.io](https://8004scan.io) - Agent scanner and scoring
+- [erc-8004scan.xyz](https://www.erc-8004scan.xyz/scanner) - Agent scanner and metadata validation
 - [GitHub: erc-8004-contracts](https://github.com/agent0-labs/erc-8004-contracts)
 - [Snowtrace Explorer](https://snowtrace.io)
 - [Railway](https://railway.app) - Recommended hosting platform

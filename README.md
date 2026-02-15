@@ -62,6 +62,7 @@ The most comprehensive skill for building ERC-8004 AI agents on Avalanche — fr
 - [ERC-8004 Spec](https://eips.ethereum.org/EIPS/eip-8004)
 - [8004.org](https://www.8004.org)
 - [8004scan.io](https://8004scan.io)
+- [erc-8004scan.xyz](https://www.erc-8004scan.xyz/scanner)
 
 ## Compatibility
 
