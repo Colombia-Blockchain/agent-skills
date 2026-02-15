@@ -97,15 +97,35 @@ Services define how other agents and users can interact with yours. Each service
 | `ENS` | Ethereum Name Service | If you have an ENS name |
 | `email` | Contact email | For human contact |
 
+### Understanding the 4 Protocols: Restaurant Analogy
+
+Think of your agent as a restaurant. Each protocol is a different way for customers (other agents or users) to interact with it:
+
+| Protocol | Analogy | What it does |
+|----------|---------|-------------|
+| **web** | The restaurant facade | People walk by, see the place, and walk in. Your dashboard for humans. |
+| **A2A** | The waiter who talks to customers | "What do you recommend?" → "I recommend today's special." Natural language Q&A. |
+| **MCP** | The menu with prices and photos | The customer sees exactly what dishes are available and orders by name. Structured tool calls. |
+| **OASF** | The sign outside: "Italian food, pizza, pasta, wine" | Someone looking for pizza sees your sign from the street and knows you have it. Discovery by skills and domains. |
+
+**Without OASF**: Another agent has to enter, read the menu, talk to the waiter... just to know if you can help.
+
+**With OASF**: Another agent sees your sign from afar: "This agent knows blockchain, DeFi, and Avalanche. That's what I need." And walks in directly.
+
+**Cost of OASF**: $0. It's just a GET endpoint that returns a static JSON. No external APIs, no LLM calls. It's like putting a sign on your door.
+
 ### Critical Rules
 
 1. **Never declare a service you haven't implemented.** Scanners probe endpoints and flag 404s
 2. **A2A requires** a valid `agent-card.json` at the declared endpoint
 3. **MCP requires** a POST endpoint that responds to JSON-RPC methods: `initialize`, `tools/list`, `tools/call`
-4. **Web service** should return a 200 status with your dashboard or landing page
-5. **Version field**: Include the protocol version (e.g., A2A `"0.3.0"`, MCP `"2025-06-18"`)
+4. **OASF requires** a GET endpoint returning skills and domains classification
+5. **Web service** should return a 200 status with your dashboard or landing page
+6. **Version field**: Include the protocol version (e.g., A2A `"0.3.0"`, MCP `"2025-06-18"`, OASF `"v0.8.0"`)
 
-### Example: Three Services
+### Example: Four Services with Enriched Metadata
+
+Basic services get you listed. **Enriched services** get you ranked higher. The difference is adding detail about what each service offers:
 
 ```json
 "services": [
@@ -116,15 +136,71 @@ Services define how other agents and users can interact with yours. Each service
   {
     "name": "A2A",
     "endpoint": "https://your-agent.com/.well-known/agent-card.json",
-    "version": "0.3.0"
+    "version": "0.3.0",
+    "a2aSkills": [
+      "natural_language_processing/information_retrieval_synthesis/search",
+      "natural_language_processing/conversation/chatbot",
+      "tool_interaction/api_schema_understanding",
+      "tool_interaction/workflow_automation"
+    ]
   },
   {
     "name": "MCP",
     "endpoint": "https://your-agent.com/mcp",
-    "version": "2025-06-18"
+    "version": "2025-06-18",
+    "mcpTools": [
+      "getPrice",
+      "getTVL",
+      "getProtocols",
+      "searchToken",
+      "askGuide"
+    ],
+    "mcpPrompts": [
+      "guide",
+      "analytics"
+    ]
+  },
+  {
+    "name": "OASF",
+    "version": "v0.8.0",
+    "endpoint": "https://your-agent.com/oasf",
+    "skills": [
+      "natural_language_processing/information_retrieval_synthesis/search",
+      "natural_language_processing/conversation/chatbot",
+      "tool_interaction/automation/workflow_automation"
+    ],
+    "domains": [
+      "technology/blockchain/avalanche",
+      "finance/defi/analytics",
+      "technology/software_engineering/apis_integration"
+    ]
   }
 ]
 ```
+
+### Why Enriched Metadata Matters
+
+Top-ranked agents (like Rank #1) don't just list their services — they describe exactly what's inside each one:
+
+| Field | Where | Purpose |
+|-------|-------|---------|
+| `mcpTools` | MCP service | Lists every tool by name — scanners verify each one works |
+| `mcpPrompts` | MCP service | Lists prompt templates your MCP server supports |
+| `a2aSkills` | A2A service | Lists what your agent can do in natural language |
+| `skills` | OASF service | Standardized skill categories for discovery |
+| `domains` | OASF service | What areas your agent specializes in |
+
+Agents with enriched metadata score higher in **Service (25%)** and **Compliance (15%)** dimensions.
+
+### Additional Fields for Scanner Ranking
+
+```json
+"pricePerMessage": "Free",
+"updatedAt": 1739577600
+```
+
+- **pricePerMessage**: Tells other agents and users if interacting with you costs money. `"Free"` for free agents.
+- **updatedAt**: Unix timestamp of your last metadata update. Shows the scanner your agent is actively maintained.
 
 ### MCP Implementation Checklist
 
@@ -137,6 +213,16 @@ If you declare MCP, your endpoint must handle:
 - Method `tools/call` → executes a tool and returns results
 - Each tool must have a complete JSON Schema for its inputs
 - Tools should match your actual capabilities (don't list tools that don't work)
+- List your tools in `mcpTools` inside the MCP service metadata
+
+### OASF Implementation Checklist
+
+If you declare OASF, your endpoint must:
+
+- `GET /oasf` returns JSON with agent info, skills, and domains
+- Skills use standardized hierarchical format (e.g., `natural_language_processing/conversation/chatbot`)
+- Domains describe your area of expertise (e.g., `technology/blockchain/avalanche`)
+- Cost: $0 — it's a static JSON response, no external APIs needed
 
 ---
 
