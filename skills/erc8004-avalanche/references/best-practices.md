@@ -400,9 +400,35 @@ When you update your agent:
 1. Update `registration.json` in your codebase
 2. Deploy the updated file to your hosting (Railway, Vercel, etc.)
 3. Verify the hosted URL serves the new version: `curl -s https://your-agent.com/registration.json | jq .name`
-4. If using IPFS: re-pin and call `setTokenURI(agentId, newIPFSUri)` on-chain
-5. If using HTTPS with same URL: no on-chain update needed (content at URL updates automatically)
+4. If using IPFS: re-pin and call `setAgentURI(agentId, newIPFSUri)` on-chain
+5. If using HTTPS with same URL: call `setAgentURI` anyway to force Snowtrace and scanners to refresh cached metadata
 6. Verify in scanner: check 8004scan.io for your agent and confirm no new warnings
+
+```bash
+# Force metadata refresh (even if URL didn't change)
+./scripts/update-uri.sh <agent-id> "https://your-agent.up.railway.app/registration.json"
+```
+
+### Root URL Must Serve HTML
+
+The `web` service endpoint in your `registration.json` is what scanners link to. When users click it, they expect a **visual webpage**, not raw JSON.
+
+```typescript
+// WRONG - users see raw JSON and think the site is broken
+app.get("/", (c) => c.json({ status: "ok" }));
+
+// RIGHT - users see a visual dashboard
+app.get("/", (c) => c.html(dashboardHTML));
+
+// Move health check to a separate endpoint
+app.get("/api/health", (c) => c.json({ status: "ok", version: "1.0.0" }));
+```
+
+Also update `railway.toml` to use the new health check path:
+```toml
+[deploy]
+healthcheckPath = "/api/health"
+```
 
 ---
 

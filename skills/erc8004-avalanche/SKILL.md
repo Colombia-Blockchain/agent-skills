@@ -52,7 +52,14 @@ export PINATA_JWT="your-pinata-jwt"
 ./scripts/check-agent.sh <agent-id>
 ```
 
-### 3. Give Feedback
+### 3. Update Agent Metadata
+
+```bash
+# Update on-chain URI to force Snowtrace/scanners to refresh metadata
+./scripts/update-uri.sh <agent-id> "https://your-agent.com/registration.json"
+```
+
+### 4. Give Feedback
 
 ```bash
 # Give reputation feedback to an agent

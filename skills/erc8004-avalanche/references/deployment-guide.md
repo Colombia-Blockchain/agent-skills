@@ -217,11 +217,13 @@ buildCommand = "npm install && npm run build"
 
 [deploy]
 startCommand = "npm start"
-healthcheckPath = "/health"
+healthcheckPath = "/api/health"
 healthcheckTimeout = 300
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
 ```
+
+> **Important**: Use `/api/health` (not `/`) for the health check. The root `/` should serve your dashboard HTML for users visiting from the scanner. Railway needs a JSON endpoint for health checks.
 
 ### Step 2: Configure `package.json` Scripts
 
@@ -386,11 +388,11 @@ const app = new Hono();
 // 1. CORS - Required for dashboard and cross-origin MCP calls
 app.use("/*", cors());
 
-// 2. Health endpoint - Required by Railway and scanners
-app.get("/health", (c) => c.json({ status: "ok", version: "1.0.0" }));
-
-// 3. Dashboard / Web UI
+// 2. Dashboard at root - Required for scanner "Web" link to show a visual page
 app.get("/", (c) => c.html(dashboardHTML));
+
+// 3. Health endpoint - Required by Railway healthcheck (must return JSON)
+app.get("/api/health", (c) => c.json({ status: "ok", version: "1.0.0" }));
 
 // 4. Registration metadata - Must be publicly accessible
 app.get("/registration.json", (c) => c.json(registrationData));

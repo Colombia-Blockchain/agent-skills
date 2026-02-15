@@ -542,4 +542,111 @@ railway logs --tail 50
 
 ---
 
+## Snowtrace & Metadata Refresh Issues
+
+### Snowtrace Shows Old Image/Description After Update
+
+**What happened**: Updated `registration.json` with new image and description, redeployed to Railway, but Snowtrace still showed the old metadata (placeholder NFT image, old description).
+
+**Root cause**: Snowtrace caches NFT metadata aggressively. Even though the hosted `registration.json` has new data, Snowtrace doesn't re-fetch unless it detects an on-chain event.
+
+**Fix**: Call `setAgentURI` on-chain to emit a `URIUpdated` event, even if the URL hasn't changed:
+
+```bash
+# This forces Snowtrace to re-read your metadata
+./scripts/update-uri.sh 1686 "https://your-agent.up.railway.app/registration.json"
+
+# Or manually with cast:
+cast send 0x8004A169FB4a3325136EB29fA0ceB6D2e539a432 \
+  "setAgentURI(uint256,string)" \
+  <your-agent-id> "https://your-agent.up.railway.app/registration.json" \
+  --rpc-url https://api.avax.network/ext/bc/C/rpc \
+  --private-key $PRIVATE_KEY
+```
+
+**Timeline**: Image may update within minutes. Description can take longer. If still stale, look for a "Refresh Metadata" button on the Snowtrace NFT page.
+
+**Prevention**: After any metadata change (name, description, image, services), always call `setAgentURI` to signal the update on-chain.
+
+---
+
+## Railway & GitHub Issues
+
+### Auto-Deploy Stops Working After Making Repo Private
+
+**What happened**: Railway was auto-deploying on every push to GitHub. After changing the repo from public to private, pushes no longer triggered deploys. Railway showed the last deploy was hours ago.
+
+**Root cause**: When a GitHub repo changes visibility from public to private, the webhook that Railway uses to detect pushes gets deleted. Railway loses the connection.
+
+**Fix**:
+1. Go to Railway dashboard → Your service → **Settings** → **Source**
+2. Disconnect the repository
+3. Reconnect the repository (Railway will request GitHub permissions for the private repo)
+4. Railway recreates the webhook and triggers a new deploy
+
+**Verification**: After reconnecting, push a small change and check that Railway shows "Check updates" or starts a new deploy.
+
+**Prevention**: If you need to make a repo private, reconnect Railway immediately after.
+
+---
+
+### Root URL Returns JSON Instead of Visual Page
+
+**What happened**: Clicking the "Web" link from the ERC-8004 scanner opened the agent URL, but the browser showed raw JSON instead of a visual page. Users reported "site not working".
+
+**Root cause**: The root endpoint `/` returned a JSON health check instead of serving HTML. Browsers display raw JSON, which looks broken to non-technical users.
+
+**Fix**: Serve the dashboard HTML at `/` and move health check to `/api/health`:
+
+```typescript
+// WRONG - root returns JSON (looks broken in browser)
+app.get("/", (c) => c.json({ status: "ok", agent: "My Agent" }));
+
+// RIGHT - root serves visual dashboard
+app.get("/", (c) => {
+  const html = readFileSync(join(__dirname, "..", "dashboard.html"), "utf-8");
+  return c.html(html);
+});
+
+// Health check at a separate endpoint
+app.get("/api/health", (c) => c.json({ status: "ok", version: "1.0.0" }));
+```
+
+Also update `railway.toml`:
+```toml
+[deploy]
+healthcheckPath = "/api/health"  # NOT "/"
+```
+
+**Prevention**: Always serve a visual HTML page at `/`. The scanner link and users expect a webpage, not JSON.
+
+---
+
+### Chainlink Price Decoder Returns Wrong Values
+
+**What happened**: On-chain Chainlink prices were showing incorrect values — either 0, NaN, or wildly wrong numbers.
+
+**Root cause**: Using `parseInt()` to decode `int256` values from ABI-encoded hex. `parseInt` cannot handle:
+- Values larger than `Number.MAX_SAFE_INTEGER` (loses precision)
+- Negative `int256` values (two's complement encoding)
+
+**Fix**: Use `BigInt` with proper two's complement handling:
+
+```typescript
+// WRONG - loses precision, ignores negative values
+const answer = parseInt(answerHex, 16);
+
+// RIGHT - handles large values and signed integers
+let answer = BigInt("0x" + answerHex);
+const MAX_INT256 = BigInt("0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+if (answer > MAX_INT256) {
+  answer = answer - BigInt("0x10000000000000000000000000000000000000000000000000000000000000000");
+}
+const price = Number(answer) / Math.pow(10, feed.decimals);
+```
+
+**Prevention**: Always use `BigInt` when decoding ABI-encoded values from smart contracts. Never use `parseInt` for values that could exceed 53 bits.
+
+---
+
 *Guide created by Cyber Paisa from real production issues encountered with AvaBuilder Agent (Agent #1686 on Avalanche Mainnet).*
