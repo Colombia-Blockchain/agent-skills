@@ -1,21 +1,21 @@
 {
   "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
   "name": "My Avalanche Agent",
-  "description": "An AI agent operating on Avalanche C-Chain",
-  "image": "https://example.com/avatar.png",
+  "description": "A clear, honest description of what your agent does. Include: capabilities, data sources, number of endpoints (free vs paid), protocols supported (A2A, MCP, x402), and who created it.",
+  "image": "https://your-agent.com/public/agent.png",
   "services": [
     {
       "name": "web",
-      "endpoint": "https://myagent.xyz/"
+      "endpoint": "https://your-agent.com/"
     },
     {
       "name": "A2A",
-      "endpoint": "https://myagent.xyz/.well-known/agent-card.json",
+      "endpoint": "https://your-agent.com/.well-known/agent-card.json",
       "version": "0.3.0"
     },
     {
       "name": "MCP",
-      "endpoint": "https://mcp.myagent.xyz/",
+      "endpoint": "https://your-agent.com/mcp",
       "version": "2025-06-18"
     }
   ],
@@ -24,10 +24,12 @@
   "registrations": [
     {
       "agentId": 0,
-      "agentRegistry": "eip155:43114:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
+      "agentRegistry": "eip155:43113:0x8004A818BFB912233c491871b3d84c89A494BD9e"
     }
   ],
-  "supportedTrust": [
-    "reputation"
+  "supportedTrust": ["reputation"],
+  "capabilities": [
+    "your-capability-1",
+    "your-capability-2"
   ]
 }

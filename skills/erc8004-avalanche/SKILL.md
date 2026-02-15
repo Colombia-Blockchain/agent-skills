@@ -169,9 +169,42 @@ cast call 0x8004BAa17C55a88189AE136b182e5fdA19dE9b63 \
 
 See `references/api-reference.md` for complete TypeScript examples.
 
+## Interoperability Protocols
+
+### A2A (Agent-to-Agent)
+
+See `references/a2a-guide.md` for:
+- Complete A2A communication flow with diagrams
+- Server side: agent-card.json structure, A2A endpoints
+- Client side: discovering, understanding, and talking to other agents
+- Multi-agent workflow examples (chaining agents together)
+- Agent card specification (v0.3.0)
+- Reputation feedback after A2A interactions
+
+### MCP (Model Context Protocol)
+
+See `references/mcp-guide.md` for:
+- Complete MCP JSON-RPC implementation (initialize, tools/list, tools/call)
+- Server side: 10-tool reference implementation with full JSON Schemas
+- Client side: automated tool discovery and invocation
+- Tool design best practices (naming, schemas, responses)
+- Testing with curl commands
+- JSON-RPC error codes and handling
+- MCP + x402 integration (free and paid tools)
+
+### x402 (Micropayments)
+
+See `references/x402-guide.md` for:
+- Complete x402 payment flow with diagrams
+- Server side: 402 responses, payment verification via facilitator
+- Client side: EIP-712 signing, creating payment proofs
+- Agent-to-agent payment discovery (automated)
+- USDC setup for Mainnet and Fuji testnet
+- Pricing best practices and security checklist
+
 ## Best Practices
 
-See `references/best-practices.md` for a comprehensive guide on:
+See `references/best-practices.md` for:
 - Structuring `registration.json` metadata for maximum scanner score
 - Image/NFT requirements and hosting
 - Service exposure (web, A2A, MCP) — only declare what works
@@ -179,23 +212,49 @@ See `references/best-practices.md` for a comprehensive guide on:
 - Avoiding scanner warnings (WA080 and others)
 - On-chain vs off-chain metadata consistency
 - Agent type classification (agentic, hybrid, informational)
-- Scanner score optimization (Engagement, Service, Publisher, Compliance, Momentum)
+- Scanner score optimization (Engagement 30%, Service 25%, Publisher 20%, Compliance 15%, Momentum 10%)
+- Common mistakes to avoid (with real examples)
 
 ## Deployment & Infrastructure
 
 See `references/deployment-guide.md` for:
-- Complete architecture diagram
+- Complete architecture diagram (ASCII)
 - Step-by-step creation flow (7 phases from zero to live agent)
 - Railway deployment guide with configuration
-- Infrastructure requirements and costs
+- Infrastructure requirements and cost estimation
 - Backend code structure and patterns (caching, timeouts, parallel calls)
-- On-chain registration flow
-- Monitoring and maintenance
-- Security checklist
+- On-chain registration flow with commands
+- Monitoring, maintenance, and security checklist
+
+## Troubleshooting
+
+See `references/troubleshooting.md` for:
+- Real production issues and their solutions
+- Scanner warning fixes (WA080, unreachable services)
+- Railway deployment issues (502, build fails, crashes)
+- API integration problems (rate limits, timeouts, memory leaks)
+- On-chain registration debugging
+- Diagnostic commands and resolution flowchart
+
+## Reference Documents
+
+| Document | Description |
+|----------|-------------|
+| `references/api-reference.md` | TypeScript/JavaScript API examples (viem + ethers.js) |
+| `references/registration-format.md` | Complete registration.json specification |
+| `references/contract-addresses.md` | All contract addresses and RPC endpoints |
+| `references/a2a-guide.md` | A2A protocol implementation guide |
+| `references/mcp-guide.md` | MCP server/client implementation guide |
+| `references/x402-guide.md` | x402 micropayment protocol guide |
+| `references/best-practices.md` | Metadata, scoring, and agent design best practices |
+| `references/deployment-guide.md` | Architecture, Railway deployment, infrastructure |
+| `references/troubleshooting.md` | Real-world issues and solutions |
 
 ## Links
 
 - [ERC-8004 Spec](https://eips.ethereum.org/EIPS/eip-8004)
 - [8004.org](https://www.8004.org)
+- [8004scan.io](https://8004scan.io) - Agent scanner and scoring
 - [GitHub: erc-8004-contracts](https://github.com/agent0-labs/erc-8004-contracts)
 - [Snowtrace Explorer](https://snowtrace.io)
+- [Railway](https://railway.app) - Recommended hosting platform
